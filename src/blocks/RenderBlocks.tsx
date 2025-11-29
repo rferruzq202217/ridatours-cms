@@ -8,12 +8,23 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
+// Bloques de conversión Ridatours
+import { AlertaConfianzaBlock } from '@/blocks/AlertaConfianza/Component'
+import { TablaConversionBlock } from '@/blocks/TablaConversion/Component'
+import { BotonCTABlock } from '@/blocks/BotonCTA/Component'
+import { FAQBlock } from '@/blocks/FAQ/Component'
+
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  // Nuevos bloques
+  alertaConfianza: AlertaConfianzaBlock,
+  tablaConversion: TablaConversionBlock,
+  botonCTA: BotonCTABlock,
+  faq: FAQBlock,
 }
 
 export const RenderBlocks: React.FC<{
