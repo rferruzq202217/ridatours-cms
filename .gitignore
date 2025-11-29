@@ -24,3 +24,8 @@ node_modules/
 node_modules
 .next
 media
+.env
+.env.local
+node_modules
+.next
+media
