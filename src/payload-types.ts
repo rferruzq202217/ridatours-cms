@@ -210,6 +210,7 @@ export interface Page {
     | TablaConversionBlock
     | BotonCTABlock
     | FAQBlock
+    | ContentAcordeonBlock
   )[];
   meta?: {
     title?: string | null;
@@ -906,6 +907,51 @@ export interface FAQBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentAcordeonBlock".
+ */
+export interface ContentAcordeonBlock {
+  titulo?: string | null;
+  subtitulo?: string | null;
+  /**
+   * Cada sección se mostrará como un acordeón desplegable
+   */
+  items: {
+    titulo: string;
+    icono?:
+      | ('none' | 'clock' | 'location' | 'money' | 'list' | 'info' | 'star' | 'ticket' | 'camera' | 'person')
+      | null;
+    contenido: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Si está marcado, este acordeón estará expandido al cargar la página
+     */
+    abiertoPorDefecto?: boolean | null;
+    id?: string | null;
+  }[];
+  /**
+   * Si está desmarcado, al abrir un acordeón se cerrarán los demás
+   */
+  permitirMultiplesAbiertos?: boolean | null;
+  estilo?: ('cards' | 'minimal' | 'bordered' | 'shadowed') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentAcordeon';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1216,6 +1262,7 @@ export interface PagesSelect<T extends boolean = true> {
         tablaConversion?: T | TablaConversionBlockSelect<T>;
         botonCTA?: T | BotonCTABlockSelect<T>;
         faq?: T | FAQBlockSelect<T>;
+        contentAcordeon?: T | ContentAcordeonBlockSelect<T>;
       };
   meta?:
     | T
@@ -1394,6 +1441,27 @@ export interface FAQBlockSelect<T extends boolean = true> {
       };
   generarSchema?: T;
   estiloAcordeon?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentAcordeonBlock_select".
+ */
+export interface ContentAcordeonBlockSelect<T extends boolean = true> {
+  titulo?: T;
+  subtitulo?: T;
+  items?:
+    | T
+    | {
+        titulo?: T;
+        icono?: T;
+        contenido?: T;
+        abiertoPorDefecto?: T;
+        id?: T;
+      };
+  permitirMultiplesAbiertos?: T;
+  estilo?: T;
   id?: T;
   blockName?: T;
 }
