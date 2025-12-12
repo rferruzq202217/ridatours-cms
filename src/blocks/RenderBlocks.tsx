@@ -13,6 +13,7 @@ import { AlertaConfianzaBlock } from '@/blocks/AlertaConfianza/Component'
 import { TablaConversionBlock } from '@/blocks/TablaConversion/Component'
 import { BotonCTABlock } from '@/blocks/BotonCTA/Component'
 import { FAQBlock } from '@/blocks/FAQ/Component'
+import { ContentAcordeonBlock } from '@/blocks/ContentAcordeon/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -25,6 +26,7 @@ const blockComponents = {
   tablaConversion: TablaConversionBlock,
   botonCTA: BotonCTABlock,
   faq: FAQBlock,
+  contentAcordeon: ContentAcordeonBlock,
 }
 
 export const RenderBlocks: React.FC<{

@@ -11,6 +11,7 @@ import { AlertaConfianza } from '../../blocks/AlertaConfianza/config'
 import { TablaConversion } from '../../blocks/TablaConversion/config'
 import { BotonCTA } from '../../blocks/BotonCTA/config'
 import { FAQ } from '../../blocks/FAQ/config'
+import { ContentAcordeon } from '../../blocks/ContentAcordeon/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -76,7 +77,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, AlertaConfianza, TablaConversion, BotonCTA, FAQ],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, AlertaConfianza, TablaConversion, BotonCTA, FAQ, ContentAcordeon],
               required: true,
               admin: {
                 initCollapsed: true,
