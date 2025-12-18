@@ -221,6 +221,41 @@ export interface Page {
     description?: string | null;
   };
   publishedAt?: string | null;
+  country?:
+    | (
+        | 'espana'
+        | 'italia'
+        | 'francia'
+        | 'reino-unido'
+        | 'alemania'
+        | 'paises-bajos'
+        | 'portugal'
+        | 'grecia'
+        | 'austria'
+        | 'belgica'
+        | 'republica-checa'
+        | 'irlanda'
+        | 'suiza'
+        | 'croacia'
+        | 'hungria'
+        | 'polonia'
+        | 'turquia'
+        | 'marruecos'
+        | 'estados-unidos'
+        | 'mexico'
+        | 'japon'
+        | 'tailandia'
+      )
+    | null;
+  /**
+   * Nombre de la ciudad (ej: Roma, París, Barcelona)
+   */
+  city?: string | null;
+  /**
+   * Slug para URLs (ej: roma, paris, barcelona)
+   */
+  citySlug?: string | null;
+  continent?: ('europa' | 'asia' | 'america-norte' | 'america-sur' | 'africa' | 'oceania') | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -1272,6 +1307,10 @@ export interface PagesSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
+  country?: T;
+  city?: T;
+  citySlug?: T;
+  continent?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
