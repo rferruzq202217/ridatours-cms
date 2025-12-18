@@ -34,15 +34,14 @@ export const Pages: CollectionConfig<'pages'> = {
     read: authenticatedOrPublished,
     update: authenticated,
   },
-  // This config controls what's populated by default when a page is referenced
-  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'pages'>
   defaultPopulate: {
     title: true,
     slug: true,
+    city: true,
+    country: true,
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'city', 'country', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -101,13 +100,9 @@ export const Pages: CollectionConfig<'pages'> = {
             MetaImageField({
               relationTo: 'media',
             }),
-
             MetaDescriptionField({}),
             PreviewField({
-              // if the `generateUrl` function is configured
               hasGenerateFn: true,
-
-              // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
@@ -122,6 +117,88 @@ export const Pages: CollectionConfig<'pages'> = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'country',
+      type: 'select',
+      label: 'País',
+      admin: {
+        position: 'sidebar',
+      },
+      options: [
+        { label: 'España', value: 'espana' },
+        { label: 'Italia', value: 'italia' },
+        { label: 'Francia', value: 'francia' },
+        { label: 'Reino Unido', value: 'reino-unido' },
+        { label: 'Alemania', value: 'alemania' },
+        { label: 'Países Bajos', value: 'paises-bajos' },
+        { label: 'Portugal', value: 'portugal' },
+        { label: 'Grecia', value: 'grecia' },
+        { label: 'Austria', value: 'austria' },
+        { label: 'Bélgica', value: 'belgica' },
+        { label: 'República Checa', value: 'republica-checa' },
+        { label: 'Irlanda', value: 'irlanda' },
+        { label: 'Suiza', value: 'suiza' },
+        { label: 'Croacia', value: 'croacia' },
+        { label: 'Hungría', value: 'hungria' },
+        { label: 'Polonia', value: 'polonia' },
+        { label: 'Turquía', value: 'turquia' },
+        { label: 'Marruecos', value: 'marruecos' },
+        { label: 'Estados Unidos', value: 'estados-unidos' },
+        { label: 'México', value: 'mexico' },
+        { label: 'Japón', value: 'japon' },
+        { label: 'Tailandia', value: 'tailandia' },
+      ],
+    },
+    {
+      name: 'city',
+      type: 'text',
+      label: 'Ciudad',
+      admin: {
+        position: 'sidebar',
+        description: 'Nombre de la ciudad (ej: Roma, París, Barcelona)',
+      },
+    },
+    {
+      name: 'citySlug',
+      type: 'text',
+      label: 'Slug de ciudad',
+      admin: {
+        position: 'sidebar',
+        description: 'Slug para URLs (ej: roma, paris, barcelona)',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, siblingData }) => {
+            if (!value && siblingData?.city) {
+              return siblingData.city
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+            }
+            return value;
+          },
+        ],
+      },
+    },
+    {
+      name: 'continent',
+      type: 'select',
+      label: 'Continente',
+      admin: {
+        position: 'sidebar',
+      },
+      options: [
+        { label: 'Europa', value: 'europa' },
+        { label: 'Asia', value: 'asia' },
+        { label: 'América del Norte', value: 'america-norte' },
+        { label: 'América del Sur', value: 'america-sur' },
+        { label: 'África', value: 'africa' },
+        { label: 'Oceanía', value: 'oceania' },
+      ],
+      defaultValue: 'europa',
+    },
     slugField(),
   ],
   hooks: {
@@ -132,7 +209,7 @@ export const Pages: CollectionConfig<'pages'> = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
+        interval: 100,
       },
       schedulePublish: true,
     },
